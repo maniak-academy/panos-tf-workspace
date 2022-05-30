@@ -39,9 +39,9 @@ resource "panos_address_object" "tfagent" {
 }
 
 resource "panos_address_group" "web-front-servers" {
-  name          = "Dynamic-Web-Front-Server-Group"
+  name          = "prod-webfront"
   description   = "Dynamic address group based on what is registered in Consul"
-  dynamic_match = "prod-webfront"
+  dynamic_match = "'prod-webfront'"
   #dynamic_match = "'web' and 'app'"  # Example of multi-tag
 
 }

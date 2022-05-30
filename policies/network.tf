@@ -33,7 +33,7 @@ resource "panos_ethernet_interface" "secure" {
 resource "panos_virtual_router" "vtr" {
   name        = "my virtual router"
   static_dist = 15
-  interfaces  = ["ethernet1/1", "ethernet1/2", "ethernet1/3"]
+  interfaces  = [panos_ethernet_interface.e1.name, panos_ethernet_interface.e2.name, panos_ethernet_interface.e3.name]
 }
 
 resource "panos_zone" "untrust" {
