@@ -1,11 +1,11 @@
-variable "panos.hostname" {
+variable "hostname" {
   default = "192.168.86.68"
 }
 
-variable "panos.sername" {
+variable "username" {
   default = "admin"
 }
 
-variable "panos.password" {
+variable "password" {
   default = "W3lcome098!"
 }

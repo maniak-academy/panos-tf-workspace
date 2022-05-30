@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "panos" {
-  hostname = var.panos.hostname
-  username = var.panos.username
-  password = var.panos.password
+  hostname = var.hostname
+  username = var.username
+  password = var.password
 }
