@@ -1,12 +1,12 @@
 
 resource "panos_security_rule_group" "egress-web-secure-outside" {
   depends_on = [
-    panos_address_group.web-front-servers
+    panos_address_group.cts-addr-grp-webfrontend
   ]
   rule {
     name                  = "egress-web-secure-outside"
     source_zones          = [panos_zone.web.name, panos_zone.secure.name]
-    source_addresses      = [panos_address_group.web-front-servers.name]
+    source_addresses      = ["any"]
     source_users          = ["any"]
     destination_zones     = [panos_zone.untrust.name]
     destination_addresses = ["any"]
@@ -20,12 +20,12 @@ resource "panos_security_rule_group" "egress-web-secure-outside" {
 
 resource "panos_security_rule_group" "web-secure" {
   depends_on = [
-    panos_address_group.web-front-servers
+    panos_address_group.cts-addr-grp-webfrontend
   ]
   rule {
     name                  = "Allow web to talk to secure"
     source_zones          = [panos_zone.web.name]
-    source_addresses      = [panos_address_group.web-front-servers.name]
+    source_addresses      = [panos_address_group.cts-addr-grp-webfrontend.name]
     source_users          = ["any"]
     destination_zones     = [panos_zone.secure.name]
     destination_addresses = ["any"]
@@ -40,7 +40,7 @@ resource "panos_security_rule_group" "web-secure" {
 
 resource "panos_security_rule_group" "secure-db-web" {
   depends_on = [
-    panos_address_group.web-front-servers
+    panos_address_group.cts-addr-grp-webfrontend
   ]
   rule {
     name                  = "Allow secure db to talk to web"
@@ -48,7 +48,7 @@ resource "panos_security_rule_group" "secure-db-web" {
     source_addresses      = ["any"]
     source_users          = ["any"]
     destination_zones     = [panos_zone.web.name]
-    destination_addresses = [panos_address_group.web-front-servers.name]
+    destination_addresses = [panos_address_group.cts-addr-grp-webfrontend.name]
     applications          = ["any"]
     services              = ["application-default"]
     categories            = ["any"]
@@ -57,9 +57,6 @@ resource "panos_security_rule_group" "secure-db-web" {
 }
 
 resource "panos_security_rule_group" "consul-web" {
-  depends_on = [
-    panos_address_group.web-front-servers
-  ]
   rule {
     name                  = "Allow consul to talk to front end"
     source_zones          = [panos_zone.untrust.name]

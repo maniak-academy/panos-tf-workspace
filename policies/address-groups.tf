@@ -38,10 +38,10 @@ resource "panos_address_object" "tfagent" {
   value = "192.168.86.42"
 }
 
-resource "panos_address_group" "web-front-servers" {
-  name          = "prod-webfront"
+resource "panos_address_group" "cts-addr-grp-webfrontend" {
+  name          = "cts-addr-grp-webfrontend"
   description   = "Dynamic address group based on what is registered in Consul"
-  dynamic_match = "'prod-webfront'"
+  dynamic_match = "prod-webfront"
   #dynamic_match = "'web' and 'app'"  # Example of multi-tag
 
 }
